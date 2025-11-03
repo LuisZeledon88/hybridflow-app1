@@ -1,0 +1,300 @@
+/*
+ * informativa.css
+ *
+ * Estilos para la página informativa y de contacto del CRM Bastos Restaurante.
+ * Incluye estructura de secciones, redes sociales, QR y reglas de responsividad.
+ */
+
+/* =============================
+  ESTILOS GENERALES Y FONDO
+============================= */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url(/SistemaWeb/img/ladrillo.avif); /* Fondo de ladrillo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #1c1c1c;
+}
+
+/* =============================
+  ENCABEZADO
+============================= */
+.header {
+  background-color: #ffb300;
+  padding: 25px 20px;
+  text-align: center;
+  color: #1c1c1c;
+  border-bottom: 4px solid #d18800;
+}
+
+.header img {
+  width: 70px;
+  margin-bottom: 10px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2em;
+}
+
+/* =============================
+  CONTENEDOR PRINCIPAL
+============================= */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 3px solid #ffb300;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.intro {
+  font-size: 1.2em;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* =============================
+  SECCIONES DE INFORMACIÓN
+============================= */
+.section {
+  background-color: #fff7e6;
+  padding: 20px;
+  border-left: 6px solid #ffb300;
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+
+.section h2 {
+  margin-top: 0;
+  color: #b22222;
+}
+
+.section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.section ul li {
+  padding: 8px 0;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.section ul li::before {
+  content: '✔️';
+  margin-right: 10px;
+}
+
+/* =============================
+  ENLACES Y PIE DE PÁGINA
+============================= */
+a {
+  color: #b22222;
+  text-decoration: underline;
+}
+
+footer {
+  margin-top: 40px;
+  padding-top: 15px;
+  border-top: 1px solid #ccc;
+  font-size: 0.9em;
+  color: #555;
+  text-align: center;
+}
+
+.note {
+  font-style: italic;
+  color: #777;
+}
+/* =============================
+  REDES SOCIALES
+============================= */
+   /* Estilos para la sección de redes sociales */
+    .social-section {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+      color: white;
+      text-align: center;
+    }
+
+    .social-section h2 {
+      color: white;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+
+    .social-section p {
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .social-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 1rem;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      min-width: 120px;
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.05);
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .social-link i {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    .social-link span {
+      font-size: 0.9rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+
+    /* Colores específicos para cada red social */
+    .social-link.maps:hover {
+      background: rgba(99, 235, 108, 0.8);
+    }
+
+    .social-link.facebook:hover {
+      background: rgba(24, 119, 242, 0.8);
+    }
+
+    .social-link.instagram:hover {
+      background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+    }
+
+    .note {
+      font-style: italic;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+/* =============================
+  RESPONSIVIDAD
+============================= */
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      .social-links {
+        gap: 1rem;
+      }
+      
+      .social-link {
+        min-width: 100px;
+        padding: 0.8rem;
+      }
+      
+      .social-link i {
+        font-size: 2rem;
+      }
+    }
+/* =============================
+  SECCIÓN QR
+============================= */
+/* Estilos para la sección QR */
+    .qr-section {
+      text-align: center;
+    }
+
+    .qr-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .qr-code {
+      background: white;
+      padding: 1rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border: 3px solid #FFC107;
+    }
+
+    .qr-code img {
+      width: 200px;
+      height: 240px;
+      display: block;
+    }
+
+    .qr-info {
+      background: linear-gradient(135deg, #FFC107 0%, #FF9800 100%);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .qr-info p {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .qr-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .qr-link:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .qr-link i {
+      font-size: 1rem;
+    }
+
+   .qr-code img {
+        width: 160px;
+        height: 192px;
+      }
+      
+      .qr-container {
+        gap: 1rem;
+      }

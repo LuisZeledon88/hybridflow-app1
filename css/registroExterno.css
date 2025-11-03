@@ -1,0 +1,706 @@
+  /*
+     * registroExterno.css
+     *
+     * Estilos para el registro externo de clientes en el CRM Bastos Restaurante.
+     * Incluye variables globales, estructura base, formularios, botones y reglas de responsividad.
+     */
+:root {
+    --primary-color: #f9c41f;
+    --primary-dark: #d4a117;
+  
+    --primary-light: #fef9e8;
+    --secondary-color: #2c3e50;
+
+    --text-dark: #2c3e50;
+    --text-medium: #5d6d7e;
+    --text-light: #85929e;
+
+    --background-cream: #fafaf5;
+    --background-white: #ffffff;
+
+    --border-color: #e8e8e8;
+
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+    --shadow-dark: rgba(0, 0, 0, 0.25);
+
+    --success-color: #27ae60;
+    --error-color: #e74c3c;
+    --warning-color: #f39c12;
+
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+
+    --transition: all 0.3s ease;
+}
+
+/* =========================================================
+   RESET & BASE
+   ========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* =============================
+        REGLAS BASE Y RESET
+    ============================= */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: linear-gradient(
+        135deg,
+        rgba(212, 175, 55, 0.4) 0%,
+        rgba(52, 73, 94, 0.9) 100%
+    );
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+   ========================================================= */
+.container {
+    /* =============================
+        CONTENEDOR PRINCIPAL
+    ============================= */
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+}
+
+/* Elimina padding lateral solo para la cabecera dentro de .container */
+.container > .header {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* =========================================================
+   HEADER & LOGO
+   ========================================================= */
+.header {
+    /* =============================
+        HEADER Y LOGO
+    ============================= */
+    display: flex;
+    justify-content: center;  /* centra horizontalmente */
+    align-items: center;      /* centra verticalmente */
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-lg) 0;
+}
+
+.logo-container,
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;              /* se ajusta al tamaño del logo */
+    margin: 0 auto;
+}
+
+.logo img {
+    display: block;
+    margin: 0 auto;
+    width: 120px;             /* ajusta según necesites */
+    height: auto;
+    background: none;
+    mix-blend-mode: multiply; /* minimiza blancos si el PNG lo trae */
+}
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+.main-content {
+    /* =============================
+        CONTENIDO PRINCIPAL
+    ============================= */
+    position: relative;
+    z-index: 10;
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: var(--spacing-xl);
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   FORM HEADER
+   ========================================================= */
+.form-header {
+    /* =============================
+        ENCABEZADO DEL FORMULARIO
+    ============================= */
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.vip-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: var(--primary-color);
+    color: #fff;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+}
+
+.form-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
+}
+
+.form-subtitle {
+    color: var(--text-medium);
+    font-size: 0.9rem;
+}
+
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+.registration-form {
+    /* =============================
+        FORMULARIO Y GRIDS
+    ============================= */
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
+}
+
+.section-title i { color: var(--primary-color); }
+
+.form-group { position: relative; }
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.9rem;
+}
+
+.form-label i { color: var(--primary-color); }
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: var(--transition);
+    background: var(--background-white);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-input.error,
+.form-select.error,
+.form-textarea.error { border-color: var(--error-color); }
+
+.birthday-grid {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.birthday-grid select { flex: 1; }
+
+.error-message {
+    display: block;
+    color: var(--error-color);
+    font-size: 0.85rem;
+    margin-top: var(--spacing-xs);
+    min-height: 1.2em;
+}
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+.form-actions {
+    /* =============================
+        BOTONES Y ACCIONES
+    ============================= */
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-top: var(--spacing-xl);
+}
+
+.btn {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+    max-width: 250px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: #fff;
+    border: none;
+}
+
+.btn-secondary {
+    background: var(--background-white);
+    color: var(--text-dark);
+    border: 2px solid var(--border-color);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover { transform: translateY(-2px); }
+
+.btn-primary:hover { box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4); }
+
+.btn-secondary:hover {
+    background: var(--primary-light);
+    border-color: var(--primary-color);
+}
+
+.btn-text,
+.btn-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+/* =========================================================
+   MENSAJE ÉXITO
+   ========================================================= */
+.success-message {
+    /* =============================
+        MENSAJE DE ÉXITO
+    ============================= */
+    background: var(--background-white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: bounceIn 0.6s ease;
+}
+
+@keyframes bounceIn {
+    0%   { transform: scale(0); }
+    50%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.success-content i {
+    font-size: 4rem;
+    color: var(--success-color);
+    margin-bottom: var(--spacing-lg);
+}
+
+.success-content h3 {
+    font-size: 1.6rem;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-md);
+}
+
+.success-content p {
+    color: var(--text-medium);
+    margin-bottom: var(--spacing-lg);
+}
+
+.vip-card-preview {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: #fff;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    display: inline-block;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer {
+    /* =============================
+        PIE DE PÁGINA
+    ============================= */
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+    color: var(--text-light);
+}
+
+.footer-content p { font-size: 0.85rem; }
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+}
+
+.footer-link {
+    color: var(--primary-light);
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: var(--transition);
+}
+
+.footer-link:hover { color: var(--primary-color); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 768px) {
+    /* =============================
+        RESPONSIVIDAD
+    ============================= */
+    .form-grid { grid-template-columns: 1fr; }
+    .form-actions { flex-direction: column; }
+    .btn { max-width: 100%; }
+}
+
+@media (max-width: 480px) {
+    .container { padding: var(--spacing-sm); }
+    .form-container { padding: var(--spacing-lg); }
+    .birthday-grid { flex-direction: column; }
+}
+/* ---------------------------------------------
+   UNIFICA ESTILO Y CENTRADO DE LOS BOTONES
+   --------------------------------------------- */
+
+/* Mantiene el degradado dorado dentro del mensaje de éxito */
+.success-content .btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: #fff;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+/* Centra el contenido de .success-message en todas las resoluciones */
+.success-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.success-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Esto centra el botón horizontalmente */
+}
+
+
+.centrar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto 0 auto;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    gap: var(--spacing-sm);
+    width: 100%;
+    max-width: 350px; /* Ajusta según tu diseño */
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: #fff;
+    border: none;
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+}
+.centrar-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(212, 175, 55, 0.3);
+}
+
+/* =========================================================
+   BOTONES DE ÉXITO MEJORADOS
+   ========================================================= */
+.success-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.btn-exit {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+    min-width: 200px;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-exit:hover {
+    background: linear-gradient(135deg, #2980b9, #1f618d);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(52, 152, 219, 0.4);
+}
+
+.btn-exit:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+}
+
+.btn-exit i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-exit:hover i {
+    transform: scale(1.1);
+}
+
+/* Mejorar la tarjeta VIP preview */
+.vip-card-preview {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin: var(--spacing-lg) 0;
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+    transform: perspective(1000px) rotateX(5deg);
+    transition: all 0.3s ease;
+}
+
+.vip-card-preview:hover {
+    transform: perspective(1000px) rotateX(0deg) translateY(-5px);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+}
+
+.card-number {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+}
+
+/* Mejorar el ícono de éxito */
+.success-content i.fas.fa-check-circle {
+    font-size: 4rem;
+    color: #27ae60;
+    margin-bottom: var(--spacing-lg);
+    animation: successPulse 2s ease-in-out infinite;
+}
+
+@keyframes successPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Mejorar el texto de éxito */
+.success-content h3 {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-md);
+    font-weight: 700;
+}
+
+.success-content p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+}
+
+.success-content p small {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* =========================================================
+   CHECKBOX GROUPS PARA ALERGIAS
+   ========================================================= */
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-ultralight) 100%);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+}
+
+.checkbox-group:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+}
+
+.checkbox-label:hover {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.checkbox-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-label .checkmark {
+    position: relative;
+    height: 18px;
+    width: 18px;
+    background: var(--bg-light);
+    border: 2px solid var(--border-color);
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.checkbox-label:hover .checkmark {
+    border-color: var(--primary-color);
+}
+
+.checkbox-label input[type="checkbox"]:checked ~ .checkmark {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.checkbox-label .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-label input[type="checkbox"]:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Estilos específicos cuando "Ninguna" está seleccionado */
+.checkbox-label input[value="Ninguna"]:checked ~ .checkmark {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border-color: #28a745;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .checkbox-group {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .checkbox-label {
+        font-size: 0.85rem;
+    }
+    
+    /* Hacer que las columnas de alergias y gustos se apilen en móviles */
+    .form-grid[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: var(--spacing-md) !important;
+    }
+}

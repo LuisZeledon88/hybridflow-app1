@@ -1,0 +1,204 @@
+    <!--
+        tarjetas.html
+        Página para la gestión de tarjetas VIP y compras asociadas.
+        Incluye búsqueda, registro y eliminación de compras, así como visualización de información de clientes VIP.
+        Estructura profesional y comentarios para facilitar el mantenimiento.
+    -->
+    <!DOCTYPE html>
+    <html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sistema Cliente VIP - Salonero</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="css/tarjetas.css">
+    </head>
+
+    <body>
+        <div class="app-container">
+            <!-- Header -->
+            <!--
+                Header principal de la página, incluye logo y navegación básica.
+            -->
+            <header class="app-header">
+                <div class="header-left">
+                    <div class="logo">
+                        <i class="fas fa-crown" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+                <div class="header-center">
+                    <h2>Sistema Cliente VIP</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="user-info">
+                                <span class="username" id="userName"></span>
+                                <span class="user-role" id="userRole"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <!--
+                Contenido principal: búsqueda de tarjetas, información de clientes y registro de compras.
+            -->
+            <main class="app-main">
+                <button class="regresar-btn" onclick="window.location.href='MenuPrincipal.html?t=' + Date.now()">
+                    <i class="fas fa-arrow-left"></i> Regresar al Menú Principal
+                </button>
+                <!-- Search Section -->
+                <!--
+                    Sección de búsqueda de tarjetas VIP por número.
+                -->
+                <div class="search-section">
+                    <h1>
+                        <i class="fas fa-search"></i>
+                        Búsqueda Cliente VIP
+                    </h1>
+                    <p>Ingrese el número de tarjeta del cliente VIP</p>
+                </div>
+
+                <!-- Search Panel -->
+                <!--
+                    Panel de búsqueda y acciones rápidas para tarjetas VIP.
+                -->
+                <div class="search-panel">
+                    <form class="search-form" id="searchForm">
+                        <div class="search-input-group">
+                            <i class="fas fa-id-card search-icon"></i>
+                            <input type="text" class="search-input" id="cardNumber" placeholder="Número de tarjeta VIP"
+                                autocomplete="off">
+                        </div>
+                        <button type="submit" class="search-btn" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                            Buscar Cliente
+                        </button>
+                    </form>
+
+                    <div class="barcode-section">
+                        <div class="barcode-info">
+                            <i class="fas fa-barcode"></i>
+                            También puede usar un lector de código de barras
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Client Information -->
+                <!--
+                    Información detallada del cliente VIP seleccionado.
+                -->
+                <div class="client-info" id="clientInfo">
+                    <div class="client-header">
+                        <div class="client-avatar" id="clientAvatar"></div>
+                        <div class="client-details">
+                            <div class="client-name" id="clientName"></div>
+                            <div class="client-birthday" id="clientBirthday"></div>
+                            <div class="client-card-number" id="clientCardNumber"></div>
+                            <div class="client-vip-years" id="memberSince"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="boton-registrar-compra">
+                        <button onclick="abrirModalCompra()" class="btn-abrir-modal">
+                            <i class="fas fa-plus-circle"></i> Registrar Compra
+                        </button>
+                    </div>
+
+                    <div class="compras-historicas">
+                        <h3><i class="fas fa-shopping-bag"></i> Compras del Cliente</h3>
+                        <table class="tabla-compras">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Monto</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaComprasBody">
+                                <!-- Se cargan desde JS -->
+                                <!--
+                                    Las compras del cliente se cargan dinámicamente mediante JS.
+                                -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>Total:</strong></td>
+                                    <td id="totalCompras">₡0</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+
+
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <!--
+                Pie de página con información de derechos y año.
+            -->
+            <footer class="app-footer">
+                <p>&copy; 2025 Sistema Cliente VIP. Todos los derechos reservados.</p>
+            </footer>
+        </div>
+
+        <!-- Birthday Modal -->
+        <!--
+            Modal para mostrar mensaje de cumpleaños a clientes VIP.
+        -->
+        <div class="birthday-modal" id="birthdayModal">
+            <div class="birthday-content">
+                <div class="birthday-emoji">🎉</div>
+                <h2 class="birthday-title">¡Aviso de Cumpleañso!</h2>
+                <p class="birthday-message" id="birthdayMessage"></p>
+                <button class="birthday-close" onclick="closeBirthdayModal()">
+                    <i class="fas fa-gift"></i>
+                    Volver
+                </button>
+            </div>
+        </div>
+        <script src="js/tarjetas.js" defer></script>
+
+        <!-- Modal para Registrar Compra -->
+        <!--
+            Modal para registrar una nueva compra asociada a la tarjeta VIP.
+        -->
+        <div class="modal-compra" id="modalCompra">
+            <div class="modal-compra-content">
+                <h2>Registrar Compra VIP</h2>
+
+                <form id="formCompra">
+                    <input type="hidden" id="cedulaClienteInput">
+                    <input type="hidden" id="idCompraInput" name="id_compra" />
+
+                    <div class="form-group">
+                        <label for="montoInput">Monto (₡):</label>
+                        <input type="number" id="montoInput" min="1" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaInput">Fecha de compra:</label>
+                        <input type="date" id="fechaInput" required>
+                    </div>
+
+                    <div class="modal-buttons">
+                        <button type="submit" class="btn-registrar">Registrar</button>
+                        <button type="button" class="btn-cancelar" onclick="cerrarModalCompra()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </body>
+
+    </html>

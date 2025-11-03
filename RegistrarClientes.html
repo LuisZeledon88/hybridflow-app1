@@ -1,0 +1,435 @@
+<!--
+    RegistrarClientes.html
+    Página para el registro y gestión de clientes VIP.
+    Incluye formularios de registro, historial, impresión de etiquetas y gestión de cambios de tarjeta.
+    Estructura profesional y comentarios para facilitar el mantenimiento.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Clientes VIP - Bastos Restaurante</title>
+    <link rel="stylesheet" href="css/clientes.css?v=1.1">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <!-- Agregamos las librerías necesarias para PDF -->
+    <!--
+        Librerías externas para generación de PDF y códigos de barras.
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header con botón de volver, logo y usuario -->
+        <!--
+            Header principal con navegación, logo y usuario activo.
+        -->
+        <header class="app-header">
+            <div class="header-left">
+                <a href="MenuPrincipal.html" class="btn btn-back">
+                    <i class="fas fa-arrow-left"></i> Menú Principal
+                </a>
+            </div>
+            
+            <div class="header-center">
+                <img src="img/LogoBastos-2025.png"  height="150px" alt="Logo Bastos" class="logo">
+            </div>
+            
+            <div class="header-right">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="username" id="userName"></span>
+                        <span class="user-role" id="userRole"></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Resto del contenido permanece igual -->
+        <!--
+            Contenido principal de la página, dividido en pestañas y formularios.
+        -->
+        <main class="app-main">
+            <!-- Sección de título -->
+            <!--
+                Título principal de la sección actual.
+            -->
+            <section class="title-section">
+                <h1><i class="fas fa-users"></i> Gestión de Clientes VIP</h1>
+                <p>Administra los clientes preferenciales del restaurante</p>
+            </section>
+
+            <!-- Panel de acciones -->
+            <!--
+                Panel con acciones rápidas y filtros.
+            -->
+            <div class="action-panel">
+                <!-- Pestañas -->
+                <!--
+                    Navegación entre pestañas de registro y gestión de clientes.
+                -->
+                <div class="tabs">
+                    <button class="tab-btn active" id="registerTab">
+                        <i class="fas fa-user-plus"></i> Registrar Cliente
+                    </button>
+                    <button class="tab-btn" id="listTab">
+                        <i class="fas fa-list"></i> Lista de Clientes
+                    </button>
+                </div>
+
+                <!-- Contenido de pestañas -->
+                <!--
+                    Contenido dinámico según la pestaña seleccionada.
+                -->
+                <div class="tab-content">
+                    <!-- Formulario de registro -->
+                    <!--
+                        Formulario para registrar nuevos clientes VIP.
+                    -->
+                    <div class="tab-pane active" id="registerForm">
+                        <form id="clientForm" class="client-form">
+                            <div class="form-grid">
+                                <!-- Columna izquierda -->
+                                <!--
+                                    Columna para datos personales del cliente.
+                                -->
+                                <div class="form-column">
+                                    <div class="input-group">
+                                        <label for="clientCardNumber">
+                                            <i class="fas fa-credit-card"></i> Número de Tarjeta VIP:
+                                        </label>
+                                        <input type="text" id="clientCardNumber" placeholder="Ej: 12345" required>
+                                        <span class="error-msg" id="cardNumberError"></span>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="clientCedula">
+                                            <i class="fas fa-id-card"></i> Cédula:
+                                        </label>
+                                        <input type="text" id="clientCedula" placeholder="Ej: 123456789" required>
+                                        <span class="error-msg" id="cedulaError"></span>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="clientName">
+                                            <i class="fas fa-user"></i> Nombre Completo:
+                                        </label>
+                                        <input type="text" id="clientName" placeholder="Ej: Juan Pérez" required>
+                                        <span class="error-msg" id="nameError"></span>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="clientPhone">
+                                            <i class="fas fa-phone"></i> Teléfono:
+                                        </label>
+                                        <input type="tel" id="clientPhone" placeholder="Ej: 88888888" required>
+                                        <span class="error-msg" id="phoneError"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Columna derecha -->
+                                <!--
+                                    Columna para datos de contacto y adicionales.
+                                -->
+                                <div class="form-column">
+                                    <div class="input-group">
+                                        <label for="clientBirthday">
+                                            <i class="fas fa-birthday-cake"></i> Fecha Cumpleaños:
+                                        </label>
+                                        <input type="text" id="clientBirthday" placeholder="DD/MM" required>
+                                        <span class="error-msg" id="birthdayError"></span>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="clientOrigin">
+                                            <i class="fas fa-map-marker-alt"></i> Lugar de Origen:
+                                        </label>
+                                        <input type="text" id="clientOrigin" placeholder="Ej: San José" required>
+                                        <span class="error-msg" id="originError"></span>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="clientCardDate">
+                                            <i class="fas fa-credit-card"></i> Fecha Entrega Tarjeta:
+                                        </label>
+                                        <input type="date" id="clientCardDate" required>
+                                        <span class="error-msg" id="cardDateError"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección de Alergias y Gustos Especiales en dos columnas -->
+                            <!--
+                                Sección para registrar alergias y gustos especiales del cliente.
+                            -->
+                            <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <!-- Columna izquierda - Alergias -->
+                                <!--
+                                    Columna para seleccionar alergias conocidas y agregar otras.
+                                -->
+                                <div>
+                                    <div class="input-group">
+                                        <label>
+                                            <i class="fas fa-exclamation-triangle"></i> Alergias:
+                                        </label>
+                                        <div class="checkbox-group" id="alergiasCheckboxGroup">
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Ninguna" id="alergia_ninguna">
+                                                <span class="checkmark"></span>
+                                                Ninguna
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Gluten" id="alergia_gluten">
+                                                <span class="checkmark"></span>
+                                                Gluten
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Lactosa" id="alergia_lactosa">
+                                                <span class="checkmark"></span>
+                                                Lactosa
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Frutos secos" id="alergia_frutos">
+                                                <span class="checkmark"></span>
+                                                Frutos secos
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Mariscos" id="alergia_mariscos">
+                                                <span class="checkmark"></span>
+                                                Mariscos
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Huevos" id="alergia_huevos">
+                                                <span class="checkmark"></span>
+                                                Huevos
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Soja" id="alergia_soja">
+                                                <span class="checkmark"></span>
+                                                Soja
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Pescado" id="alergia_pescado">
+                                                <span class="checkmark"></span>
+                                                Pescado
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Apio" id="alergia_apio">
+                                                <span class="checkmark"></span>
+                                                Apio
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Mostaza" id="alergia_mostaza">
+                                                <span class="checkmark"></span>
+                                                Mostaza
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Sésamo" id="alergia_sesamo">
+                                                <span class="checkmark"></span>
+                                                Sésamo
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Sulfitos" id="alergia_sulfitos">
+                                                <span class="checkmark"></span>
+                                                Sulfitos
+                                            </label>
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" name="alergias" value="Otro" id="alergia_otro">
+                                                <span class="checkmark"></span>
+                                                Otro
+                                            </label>
+                                        </div>
+                                        <span class="error-msg" id="alergiasError"></span>
+                                    </div>
+
+                                    <div class="input-group" id="otroAlergiaGroup" style="display: none;">
+                                        <label for="clientOtraAlergia">
+                                            <i class="fas fa-edit"></i> Especifique la alergia:
+                                        </label>
+                                        <input type="text" id="clientOtraAlergia" placeholder="Ej: Nueces, Chocolate, etc.">
+                                        <span class="error-msg" id="otraAlergiaError"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Columna derecha - Gustos Especiales -->
+                                <!--
+                                    Columna para seleccionar gustos especiales y agregar otros.
+                                -->
+                                <div>
+                                    <div class="input-group">
+                                        <label for="clientGustosEspeciales">
+                                            <i class="fas fa-heart"></i> Gustos Especiales:
+                                        </label>
+                                        <textarea id="clientGustosEspeciales" placeholder="Ej: Prefiere comida vegetariana, le gusta la comida picante, etc." rows="6"></textarea>
+                                        <span class="error-msg" id="gustosEspecialesError"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Botones de acción -->
+                            <!--
+                                Botones para enviar el formulario o limpiar los campos.
+                            -->
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-clear" id="clearBtn">
+                                    <i class="fas fa-broom"></i> Limpiar
+                                </button>
+                                <button type="submit" class="btn btn-save" id="saveBtn">
+                                    <i class="fas fa-save"></i> Guardar Cliente
+                                </button>
+                               <button type="submit" class="btn btn-edit" id="editBtn" style="display: none;">
+                                    <i class="fas fa-edit"></i> Actualizar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Lista de clientes -->
+                    <!--
+                        Tabla dinámica con la lista de clientes registrados.
+                    -->
+                    <div class="tab-pane" id="clientList">
+                        <div class="list-controls">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="searchInput" placeholder="Buscar clientes...">
+                            </div>
+                            <button class="btn btn-refresh" id="refreshBtn">
+                                <i class="fas fa-sync-alt"></i> Actualizar
+                            </button>
+                        </div>
+
+                        <div class="table-container">
+                            <table id="clientsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Nº Tarjeta</th>
+                                        <th>Cédula</th>
+                                        <th>Nombre</th>
+                                        <th>Teléfono</th>
+                                        <th>Origen</th>
+                                        <th>Cumpleaños</th>
+                                        <th>Alergias</th>
+                                        <th>Gustos Especiales</th>
+                                        <th>Código de Barras</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="clientsTableBody">
+                                    <!-- Datos se cargarán dinámicamente -->
+                                    <!--
+                                        Los datos de clientes se cargan mediante JS.
+                                    -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <!--
+            Pie de página con información de derechos y año.
+        -->
+        <footer class="app-footer">
+            <p>© 2025 Bastos Restaurante - Sistema CRM</p>
+            <div class="system-status">
+                <span>v2.1.0</span>
+                <span class="status-indicator">
+                    <i class="fas fa-circle"></i> Sistema Activo
+                </span>
+            </div>
+        </footer>
+<!-- Modal de cambio de tarjeta -->
+<!--
+    Modal para gestionar el cambio de tarjeta VIP de un cliente.
+-->
+<div class="modal" id="changeCardModal">
+    <div class="modal-content">
+        <div class="modal-icon gold-icon">
+            <i class="fas fa-exchange-alt"></i>
+        </div>
+        <h3>Reasignar Tarjeta VIP</h3>
+        <form id="changeCardForm">
+            <div class="input-group">
+                <label for="currentCardNumber">
+                    <i class="fas fa-credit-card"></i> Tarjeta Actual:
+                </label>
+                <input type="text" id="currentCardNumber" readonly class="gold-input">
+            </div>
+            
+            <div class="input-group">
+                <label for="newCardNumber">
+                    <i class="fas fa-credit-card"></i> Nueva Tarjeta VIP:
+                </label>
+                <input type="text" id="newCardNumber" placeholder="Nuevo número" required class="gold-input">
+                <span class="error-msg" id="newCardError"></span>
+            </div>
+            
+            <div class="input-group">
+                <label for="changeReason">
+                    <i class="fas fa-comment"></i> Motivo del cambio:
+                </label>
+                <select id="changeReason" required class="gold-input">
+                    <option value="">Seleccione un motivo</option>
+                    <option value="Pérdida">Pérdida</option>
+                    <option value="Deterioro">Deterioro</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            
+            <div class="input-group" id="otherReasonGroup" style="display: none;">
+                <label for="otherReason">
+                    <i class="fas fa-comment-dots"></i> Especifique:
+                </label>
+                <input type="text" id="otherReason" placeholder="Detalle el motivo" class="gold-input">
+            </div>
+            
+            <div class="modal-actions">
+                <button type="button" class="btn btn-cancel silver-btn" id="cancelChangeBtn">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-confirm gold-btn">
+                    <i class="fas fa-check"></i> Confirmar Cambio
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de confirmación de registro exitoso -->
+<!--
+    Modal para mostrar confirmación tras un registro exitoso.
+-->
+<div class="modal" id="successModal">
+    <div class="modal-content success-modal">
+        <div class="modal-icon success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h3>¡Cliente Agregado Correctamente!</h3>
+        <p>El cliente ha sido registrado exitosamente en el sistema.</p>
+        
+        <div class="success-question">
+            <p><strong>¿Gustaría añadir otro cliente?</strong></p>
+        </div>
+        
+        <div class="modal-actions success-actions">
+            <button type="button" class="btn btn-secondary" id="goToMenuBtn">
+                <i class="fas fa-home"></i> Menú Principal
+            </button>
+            <button type="button" class="btn btn-primary" id="addAnotherBtn">
+                <i class="fas fa-user-plus"></i> Registrar Otro Cliente
+            </button>
+        </div>
+    </div>
+</div>
+        
+    <script src="js/RegistrarClientes.js"></script>
+</body>
+</html>

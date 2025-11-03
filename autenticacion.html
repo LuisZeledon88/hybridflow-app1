@@ -1,0 +1,278 @@
+<!--
+    autenticacion.html
+    Página de autenticación y acceso seguro al sistema CRM Bastos Restaurante.
+    Incluye formulario de login, recuperación de contraseña y perfil de usuario.
+    Estructura profesional y comentarios para facilitar el mantenimiento.
+-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticación - Bastos Restaurante CRM</title>
+    <link rel="stylesheet" href="css/autenticacion.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="auth-container">
+        <!-- Background Shapes -->
+        <!--
+            Formas de fondo decorativas para la pantalla de autenticación.
+        -->
+        <div class="bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+
+        <!-- Authentication Card -->
+        <!--
+            Tarjeta principal de autenticación con logo, formulario y perfil.
+        -->
+        <div class="auth-card">
+            <!-- Header -->
+            <!--
+                Header con logo y badge de acceso seguro.
+            -->
+            <div class="auth-header">
+                <div class="logo">
+                    <img src="img/LogoBastos-2025.png" width="150px" alt="Logo Bastos" />
+                </div>
+
+                <div class="auth-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span id="badgeText">ACCESO SEGURO</span>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <!--
+                Formulario de inicio de sesión para usuarios registrados.
+            -->
+            <div class="form-container">
+                <form class="auth-form" id="loginForm">
+                    <div class="form-title">
+                        <h2>Iniciar Sesión</h2>
+                        <p>Accede al sistema de gestión de clientes VIP</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="username" class="form-label">
+                            <i class="fas fa-user"></i>
+                            Correo Electrónico
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="text" id="username" name="username" class="form-input"
+                                placeholder="Ingrese su correo" required>
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                        <span class="error-message" id="usernameError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock"></i>
+                            Contraseña
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" name="password" class="form-input"
+                                placeholder="Ingrese su contraseña" required>
+                            <i class="fas fa-lock input-icon"></i>
+                            <button type="button" class="toggle-password" data-target="password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="error-message" id="passwordError"></span>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe" name="rememberMe" class="form-checkbox">
+                            <span class="checkmark"></span>
+                            <span class="checkbox-text">Recordarme</span>
+                        </label>
+
+                    </div>
+                    <button type="submit" class="btn-primary" id="loginBtn">
+                        <span class="btn-text">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Iniciar Sesión
+                        </span>
+                        <div class="btn-loader" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Verificando...
+                        </div>
+                    </button>
+                    <div class="auth-error" id="loginError" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="loginErrorText"></span>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Profile Section -->
+            <!--
+                Sección de perfil de usuario tras autenticación exitosa.
+            -->
+            <div class="profile-section" id="profileSection" style="display: none;">
+                <div class="section-title">
+                    <h2>Perfil de Usuario</h2>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="userName">Cargando...</span>
+                        <span class="user-role" id="userRole">Cargando...</span>
+                    </div>
+                </div>
+                <div class="form-container">
+                <form class="password-form" id="passwordForm">
+                    <h3>Cambiar Contraseña</h3>
+                    <div class="form-group">
+                        <label for="currentPassword" class="form-label">
+                            <i class="fas fa-lock"></i>
+                            Contraseña Actual
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="password" id="currentPassword" name="currentPassword" class="form-input"
+                                placeholder="Ingrese su contraseña actual" required>
+                            <i class="fas fa-lock input-icon"></i>
+                            <button type="button" class="toggle-password" data-target="currentPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="error-message" id="currentPasswordError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword" class="form-label">
+                            <i class="fas fa-key"></i>
+                            Nueva Contraseña
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="password" id="newPassword" name="newPassword" class="form-input"
+                                placeholder="Ingrese su nueva contraseña" required>
+                            <i class="fas fa-key input-icon"></i>
+                            <button type="button" class="toggle-password" data-target="newPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="error-message" id="newPasswordError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">
+                            <i class="fas fa-key"></i>
+                            Confirmar Nueva Contraseña
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-input"
+                                placeholder="Confirme su nueva contraseña" required>
+                            <i class="fas fa-key input-icon"></i>
+                            <button type="button" class="toggle-password" data-target="confirmPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="error-message" id="confirmPasswordError"></span>
+                    </div>
+                    <button type="submit" class="btn-primary" id="changePasswordBtn">
+                        <span class="btn-text">
+                            <i class="fas fa-save"></i>
+                            Guardar Cambios
+                        </span>
+                        <div class="btn-loader" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Guardando...
+                        </div>
+                    </button>
+                    <div class="auth-error" id="passwordError" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="passwordErrorText"></span>
+                    </div>
+                </form>
+                </div>
+                <button class="btn-secondary" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Cerrar Sesión
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <!--
+                Pie de página con información de derechos, versión y estado del sistema.
+            -->
+            <div class="system-info">
+                <p>© 2025 Bastos Restaurante - Sistema CRM</p>
+                <div class="version-info">
+                    <span>v2.1.0</span>
+                    <span class="status-indicator">
+                        <i class="fas fa-circle"></i>
+                        Sistema Activo
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recovery Modal -->
+    <!--
+        Modal para recuperación de contraseña por email o usuario.
+    -->
+    <div class="modal" id="recoveryModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>
+                    <i class="fas fa-key"></i>
+                    Recuperar Contraseña
+                </h3>
+                <button class="modal-close" id="closeRecoveryModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Ingresa tu usuario o correo electrónico para recibir instrucciones de recuperación.</p>
+                <form id="recoveryForm">
+                    <div class="form-group">
+                        <label for="recoveryEmail" class="form-label">
+                            <i class="fas fa-envelope"></i>
+                            Email o Usuario
+                        </label>
+                        <input type="text" id="recoveryEmail" name="recoveryEmail" class="form-input"
+                            placeholder="usuario@ejemplo.com" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" id="cancelRecovery">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Enviar Instrucciones
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <!--
+        Modal para mostrar confirmación tras una operación exitosa.
+    -->
+    <div class="modal" id="successModal" style="display: none;">
+        <div class="modal-content success-modal">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 id="successTitle">¡Operación Exitosa!</h3>
+            <p id="successMessage">Acceso autorizado correctamente</p>
+            <button class="btn-primary" id="continueBtn">
+                <i class="fas fa-arrow-right"></i>
+                Continuar
+            </button>
+        </div>
+    </div>
+    </div>
+
+    <script src="js/autenticacion.js"></script>
+</body>
+
+</html>

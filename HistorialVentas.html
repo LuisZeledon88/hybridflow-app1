@@ -1,0 +1,44 @@
+<!--
+    HistorialVentas.html
+    Página para mostrar el historial de ventas y estadísticas de compras.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historial de Ventas - Bastos Restaurante</title>
+    <link rel="stylesheet" href="css/HistorialVentas.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <div class="historial-ventas-vip-bg"></div>
+    <div class="historial-ventas-vip-bar">
+        <div class="bar-content">
+            <span class="bar-title"><i class="fas fa-chart-bar"></i> Historial de Ventas</span>
+            <button class="btn-regresar" onclick="window.location.href='MenuPrincipal.html'">
+                <i class="fas fa-arrow-left"></i> Regresar al Menú Principal
+            </button>
+        </div>
+    </div>
+    <div class="historial-ventas-vip-panel">
+        <div class="historial-ventas-vip-header">
+            <h1>Historial de Ventas</h1>
+            <p>Ventas realizadas desde la última compra registrada.</p>
+        </div>
+        <div class="analisis-ventas">
+            <div id="analisisVentas">
+                <p>Cargando análisis de ventas...</p>
+            </div>
+            <div id="resumenVentasContainer">
+                <!-- Aquí se insertan las tablas resumen por JS -->
+            </div>
+        </div>
+        <div id="ventasEstadisticas">
+            <p>Cargando historial de ventas...</p>
+        </div>
+    </div>
+    <script src="js/HistorialVentas.js" defer></script>
+</body>
+</html>

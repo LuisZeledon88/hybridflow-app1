@@ -1,0 +1,410 @@
+verificado<!--
+  manualTecnico.html
+  Manual técnico del sistema CRM Bastos.
+  Incluye arquitectura, despliegue, módulos, usuarios y stack tecnológico.
+  Estructura profesional y comentarios para facilitar el mantenimiento.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CRM Bastos - Manual Técnico</title>
+
+  <!-- Fuente igual que la app -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      /* Paleta alineada a MenuPrincipal.css */
+      --primary-dark:#f9c41f;
+      --primary-light:#fdd147;
+      --secondary:#5C6BC0;
+      --light:#FAFAFA;
+      --dark:#333333;
+      --gray:#e0e0e0;
+      --success:#66BB6A;
+      --danger:#EF5350;
+      --radius:16px;
+      --shadow:0 10px 30px rgba(0,0,0,0.10);
+      --shadow-soft:0 6px 20px rgba(0,0,0,0.08);
+      --transition:all .25s ease;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Poppins',Arial,sans-serif;
+      background:
+        linear-gradient(rgba(255,255,255,.96),rgba(255,255,255,.96)),
+        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat fixed;
+      color:var(--dark);
+      min-height:100vh;
+      line-height:1.6;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:0 auto;
+      padding:24px;
+    }
+
+    /* Topbar */
+    .topbar{
+      display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+    }
+    .back-btn{
+      background:#fff;border:1px solid var(--gray);color:var(--dark);
+      padding:10px 14px;border-radius:12px;font-weight:600;text-decoration:none;
+      box-shadow:var(--shadow-soft);transition:var(--transition);
+    }
+    .back-btn:hover{transform:translateY(-1px);border-color:var(--primary-dark)}
+    .brand-spacer{width:48px}
+
+    /* Header hero */
+    .header{
+      background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));
+      color:#333;
+      padding:34px 26px;
+      border-radius:24px;
+      margin-bottom:26px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .header::after{
+      content:"";
+      position:absolute; inset:-20% -10% auto auto;
+      width:340px;height:340px; border-radius:50%;
+      background:radial-gradient(circle at center, rgba(255,255,255,.35), transparent 60%);
+      filter:blur(8px); z-index:-1;
+      transform:translate(10%, -20%);
+    }
+    .header h1{
+      font-weight:700; font-size:2.2rem; color:#333; letter-spacing:.3px;
+    }
+    .header .subtitle{
+      margin-top:8px; font-weight:500; color:#4a4a4a; opacity:.9;
+    }
+
+    /* Tabs (chips) */
+    .nav-tabs{
+      position:sticky; top:10px; z-index:5;
+      display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+      margin:22px 0 26px 0;
+    }
+    .nav-tab{
+      border:none; cursor:pointer; font-weight:600;
+      padding:12px 18px; border-radius:999px;
+      background:#fff; color:#333; box-shadow:var(--shadow-soft);
+      transition:var(--transition);
+      border:1px solid #f2f2f2;
+    }
+    .nav-tab:hover{ transform:translateY(-2px); border-color:var(--primary-dark) }
+    .nav-tab.active{
+      background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));
+      color:#333; transform:translateY(-2px);
+      border-color:transparent;
+    }
+
+    /* Secciones / tarjetas */
+    .content-section{
+      display:none; background:#fff; border-radius:20px; padding:28px;
+      margin-bottom:20px; box-shadow:var(--shadow-soft);
+      animation:fadeIn .35s ease;
+    }
+    .content-section.active{ display:block }
+    @keyframes fadeIn{from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:translateY(0)}}
+
+    h2{
+      color:#333; font-size:1.7rem; margin-bottom:18px; font-weight:700;
+      display:flex; align-items:center; gap:10px;
+    }
+    h2::before{
+      content:""; width:6px; height:24px; border-radius:6px;
+      background:linear-gradient(180deg,var(--primary-dark),var(--primary-light));
+      display:inline-block;
+    }
+    h3{ color:#222; margin:18px 0 12px; font-size:1.15rem; font-weight:700 }
+
+    .summary-card{
+      background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));
+      color:#333; padding:24px; border-radius:18px; margin:18px 0; text-align:center;
+      box-shadow:var(--shadow-soft);
+    }
+    .summary-card h3{ color:#333; margin-bottom:10px; font-size:1.2rem }
+
+    .architecture-grid{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:16px; margin:18px 0;
+    }
+    .arch-card{
+      background:#fff; color:#333; padding:20px; border-radius:16px;
+      transition:var(--transition); position:relative; overflow:hidden;
+      border:1px solid #f3f3f3; box-shadow:var(--shadow-soft);
+    }
+    .arch-card::before{
+      /* borde luminiscente a la izquierda */
+      content:""; position:absolute; left:0; top:0; width:6px; height:100%;
+      background:linear-gradient(180deg,var(--primary-dark),var(--primary-light));
+    }
+    .arch-card:hover{ transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14) }
+    .arch-card h4{ font-size:1.05rem; margin-bottom:10px; font-weight:700; color:#111 }
+
+    .server-info{
+      background:#fff; border:1px solid #f3f3f3; color:#333; padding:22px;
+      border-radius:18px; margin:18px 0; box-shadow:var(--shadow-soft);
+    }
+    .server-info h4{ color:#111; margin-bottom:12px; font-size:1.05rem; font-weight:700 }
+
+    .info-grid{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:14px; margin-top:10px;
+    }
+    .info-item{
+      background:#fff; padding:14px; border-radius:12px; border:1px solid #efefef;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .users-table{
+      width:100%; border-collapse:separate; border-spacing:0; margin:14px 0;
+      border-radius:12px; overflow:hidden; box-shadow:var(--shadow-soft); border:1px solid #f1f1f1;
+    }
+    .users-table th{
+      background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));
+      color:#333; padding:14px; text-align:left; font-weight:700; font-size:1rem;
+    }
+    .users-table td{ padding:12px 14px; border-top:1px solid #f4f4f4; font-weight:500 }
+    .users-table tr:nth-child(even){ background:#fcfcfc }
+    .users-table tr:hover{ background:#fff6d4 }
+
+    .security-alert{
+      background:#fff; color:#333; padding:16px; border-radius:12px; margin:16px 0;
+      text-align:center; font-weight:600; border:1px dashed #ffb300; box-shadow:var(--shadow-soft);
+    }
+
+    .code-block{
+      background:#111; color:#ffe58a; padding:20px; border-radius:12px;
+      font-family:'Courier New',monospace; margin:14px 0; border:1px solid #2b2b2b;
+      overflow-x:auto; font-size:1rem;
+    }
+
+    .deployment-list{ counter-reset:step; list-style:none; padding:0; margin-top:6px }
+    .deployment-list li{
+      counter-increment:step; margin:12px 0; padding:16px 18px 16px 58px;
+      background:#fff; border-radius:14px; position:relative; transition:var(--transition);
+      border:1px solid #f0f0f0; box-shadow:var(--shadow-soft);
+    }
+    .deployment-list li:hover{ transform:translateX(6px); background:#fffdf1 }
+    .deployment-list li::before{
+      content:counter(step); position:absolute; left:16px; top:50%; transform:translateY(-50%);
+      background:var(--success); color:#fff; width:30px; height:30px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.95rem;
+      box-shadow:0 6px 16px rgba(102,187,106,.35);
+    }
+
+    .modules-grid{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:16px; margin:18px 0;
+    }
+    .module-card{
+      background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));
+      color:#333; padding:22px; border-radius:14px; text-align:center;
+      transition:var(--transition); position:relative; overflow:hidden; box-shadow:var(--shadow-soft);
+    }
+    .module-card:hover{ transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14) }
+    .module-card h4{ font-size:1.05rem; margin-bottom:8px; font-weight:700; color:#111 }
+
+    .tech-stack{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:16px; margin:18px 0;
+    }
+    .tech-card{
+      background:#fff; color:#333; padding:20px; border-radius:16px;
+      transition:var(--transition); border:1px solid #f3f3f3; box-shadow:var(--shadow-soft);
+    }
+    .tech-card:hover{ transform:translateY(-4px); box-shadow:0 12px 28px rgba(0,0,0,.12) }
+    .tech-card h4{ font-size:1.05rem; margin-bottom:10px; font-weight:700; color:#111 }
+
+    /* Responsive */
+    @media (max-width:768px){
+      .container{ padding:14px }
+      .header{ padding:26px 18px }
+      .header h1{ font-size:1.8rem }
+      .nav-tab{ padding:10px 14px }
+      .content-section{ padding:18px }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Topbar -->
+  <!--
+    Barra superior para navegación técnica o regreso al dashboard.
+  -->
+    <div class="topbar">
+      <a class="back-btn" href="MenuPrincipal.html" title="Volver al Dashboard">← Volver al Dashboard</a>
+      <div class="brand-spacer"></div>
+    </div>
+
+    <!-- Hero -->
+  <!--
+    Sección principal con título y subtítulo del manual técnico.
+  -->
+    <div class="header">
+      <h1>CRM Bastos</h1>
+      <p class="subtitle">Manual Técnico — Sistema de Gestión de Clientes VIP</p>
+    </div>
+
+    <!-- Tabs -->
+  <!--
+    Navegación por pestañas para acceder a las diferentes secciones técnicas.
+  -->
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showSection('executive', this)">Resumen Ejecutivo</button>
+      <button class="nav-tab" onclick="showSection('architecture', this)">Arquitectura</button>
+      <button class="nav-tab" onclick="showSection('server', this)">Entorno Servidor</button>
+      <button class="nav-tab" onclick="showSection('users', this)">Usuarios</button>
+      <button class="nav-tab" onclick="showSection('deployment', this)">Despliegue</button>
+      <button class="nav-tab" onclick="showSection('modules', this)">Módulos</button>
+    </div>
+
+    <!-- Secciones -->
+  <!--
+    Secciones principales del manual técnico: resumen ejecutivo, arquitectura, servidor, usuarios, despliegue y módulos.
+  -->
+    <div id="executive" class="content-section active">
+      <h2>📋 Resumen Ejecutivo</h2>
+      <div class="summary-card">
+        <h3>🏢 CRM_Bastos</h3>
+        <p><strong>Sistema web integrado</strong> que combina frontend y backend en una sola carpeta, ejecutándose en VM Windows bajo XenServer. Utiliza Apache como servidor web y MySQL como base de datos.</p>
+      </div>
+
+      <h3>🔧 Características Principales</h3>
+      <div class="architecture-grid">
+        <div class="arch-card"><h4>🔐 Autenticación</h4><p>Sistema de login seguro con control de acceso por roles</p></div>
+        <div class="arch-card"><h4>⭐ Gestión Clientes VIP</h4><p>Administración completa de clientes preferenciales</p></div>
+        <div class="arch-card"><h4>📊 Dashboard</h4><p>Panel de control con estadísticas y métricas</p></div>
+        <div class="arch-card"><h4>🎂 Cumpleaños</h4><p>Notificaciones automáticas vía WhatsApp</p></div>
+        <div class="arch-card"><h4>💳 Tarjetas VIP</h4><p>Administración de tarjetas y sistema de compras</p></div>
+      </div>
+    </div>
+
+    <div id="architecture" class="content-section">
+      <h2>🏗️ Arquitectura del Sistema</h2>
+      <div class="tech-stack">
+        <div class="tech-card"><h4>🎨 Frontend</h4><p>• HTML5, CSS3, JavaScript<br>• jQuery para interactividad<br>• DataTables (opcional)<br>• Interfaz responsiva</p></div>
+        <div class="tech-card"><h4>⚙️ Backend</h4><p>• PHP con arquitectura MVC ligera<br>• Misma carpeta que frontend<br>• Procesamiento AJAX<br>• Validación servidor</p></div>
+        <div class="tech-card"><h4>🗄️ Base de Datos</h4><p>• MySQL en puerto 3306<br>• Administrada con SQLYog<br>• Estructura optimizada<br>• Respaldos automáticos</p></div>
+        <div class="tech-card"><h4>🌐 Servicios</h4><p>• Apache (puertos 80/443)<br>• MySQL (puerto 3306)<br>• Acceso HTTP/HTTPS<br>• Firewall configurado</p></div>
+      </div>
+    </div>
+
+    <div id="server" class="content-section">
+      <h2>🖥️ Entorno del Servidor</h2>
+      <div class="server-info">
+        <h4>🏢 Servidor Físico</h4>
+        <div class="info-grid">
+          <div class="info-item"><strong>Nombre:</strong> xenservergrupo3<br><strong>Virtualización:</strong> Citrix XenServer<br><strong>IP:</strong> 10.50.80.208</div>
+          <div class="info-item"><strong>VM:</strong> Windows<br><strong>Servicios:</strong> Apache + MySQL<br><strong>Acceso:</strong> XenCenter/RDP</div>
+        </div>
+      </div>
+
+      <h3>📂 Estructura del Proyecto</h3>
+      <div class="code-block">SistemaWeb/<br>├── conexion/     # Configuración BD<br>├── css/          # Estilos<br>├── img/          # Imágenes<br>├── js/           # JavaScript<br>└── php/          # Scripts PHP</div>
+
+      <h3>🔧 Base de Datos</h3>
+      <div class="server-info">
+        <h4>Credenciales MySQL</h4>
+        <div class="info-grid">
+          <div class="info-item"><strong>BD:</strong> crm_bastos<br><strong>Usuario:</strong> Grupo3<br><strong>Puerto:</strong> 3306</div>
+          <div class="info-item"><strong>Contraseña:</strong> admin1234*<br><strong>Admin:</strong> SQLYog<br><strong>Ubicación:</strong> C:\xampp\htdocs\SistemaWeb</div>
+        </div>
+      </div>
+
+      <div class="security-alert"><strong>⚠️ Firewall:</strong> Puertos 80, 443, 3306 abiertos</div>
+    </div>
+
+    <div id="users" class="content-section">
+      <h2>👥 Usuarios del Sistema</h2>
+      <table class="users-table">
+        <thead><tr><th>Usuario</th><th>Correo</th><th>Rol</th></tr></thead>
+        <tbody>
+          <tr><td>Jean Carlos</td><td>jeancarlo@gmail.com</td><td><strong>Propietario</strong></td></tr>
+          <tr><td>Pablo</td><td>pablo@gmail.com</td><td><strong>Salonero</strong></td></tr>
+          <tr><td>Javier</td><td>javi@gmail.com</td><td><strong>Desarrollador</strong></td></tr>
+        </tbody>
+      </table>
+
+      <h3>🔒 Medidas de Seguridad</h3>
+      <div class="architecture-grid">
+        <div class="arch-card"><h4>Contraseñas</h4><p>• Cambiar por defecto<br>• Políticas de caducidad<br>• Formato seguro</p></div>
+        <div class="arch-card"><h4>Validación PHP</h4><p>• filter_var()<br>• Sanitización datos<br>• Validación servidor</p></div>
+        <div class="arch-card"><h4>HTTPS</h4><p>• Puerto 443 habilitado<br>• Conexiones cifradas<br>• Certificados SSL</p></div>
+      </div>
+    </div>
+
+    <div id="deployment" class="content-section">
+      <h2>🚀 Guía de Despliegue</h2>
+      <ol class="deployment-list">
+        <li><strong>Instalar XAMPP</strong><br>Instalar XAMPP completo (Apache + MySQL + PHP) en la VM Windows</li>
+        <li><strong>Crear Base de Datos</strong><br>Crear BD <code>crm_bastos</code> y usuario <code>Grupo3</code> con permisos completos</li>
+        <li><strong>Importar Esquema</strong><br>Importar el esquema SQL y datos iniciales del sistema</li>
+        <li><strong>Copiar Proyecto</strong><br>Copiar carpeta completa a <code>C:\xampp\htdocs\SistemaWeb</code></li>
+        <li><strong>Verificar Puertos</strong><br>Comprobar que puertos 80, 443, 3306 estén abiertos</li>
+        <li><strong>Probar URLs</strong><br>Verificar funcionamiento de autenticación y registro</li>
+      </ol>
+      <h3>🌐 URLs de Acceso</h3>
+      <div class="code-block"><strong>Autenticación:</strong><br>http://10.50.80.215/proyectosistemaweb/autenticacion.html<br><br><strong>Registro Cliente Externo:</strong><br>http://10.50.80.215/proyectosistemaweb/registroclienteexterno.html</div>
+    </div>
+
+    <div id="modules" class="content-section">
+      <h2>🧩 Módulos del Sistema</h2>
+      <div class="modules-grid">
+        <div class="module-card"><h4>🔐 Autenticación</h4><p>Inicio de sesión y control de acceso por roles</p></div>
+        <div class="module-card"><h4>👥 Gestión Usuarios</h4><p>Alta, baja y edición de usuarios del sistema</p></div>
+        <div class="module-card"><h4>⭐ Clientes VIP</h4><p>Registro y consulta de clientes preferenciales</p></div>
+        <div class="module-card"><h4>📊 Dashboard</h4><p>Estadísticas y gráficas del sistema</p></div>
+        <div class="module-card"><h4>🎂 Cumpleaños Próximos</h4><p>Listado y envío automático por WhatsApp</p></div>
+        <div class="module-card"><h4>💳 Tarjetas VIP</h4><p>Gestión de tarjetas y compras</p></div>
+      </div>
+
+      <!-- Bloque atractivo para descarga de PDF -->
+      <div style="max-width:520px;margin:36px auto 0 auto;padding:32px 28px;background:linear-gradient(135deg,#fffbe6,#f9c41f 80%);border-radius:22px;box-shadow:0 8px 32px rgba(249,196,31,0.13);text-align:center;position:relative;overflow:hidden;">
+        <div style="font-size:3.2rem;line-height:1;margin-bottom:12px;color:#d4a117;">
+          <span style="filter:drop-shadow(0 2px 8px #f9c41f70);">📄</span>
+        </div>
+        <h3 style="font-size:1.35rem;font-weight:700;color:#222;margin-bottom:10px;">Manual Técnico del Código Fuente</h3>
+        <p style="color:#444;font-size:1.05rem;margin-bottom:22px;">Descarga el PDF con la documentación completa y profesional del código fuente del sistema CRM Bastos Restaurante.</p>
+        <a href="pdf/Manual Técnico del código fuente.pdf" download style="display:inline-block;padding:1rem 2.2rem;background:linear-gradient(90deg,#f9c41f,#ffe066 90%);color:#222;font-weight:700;font-size:1.08rem;border-radius:12px;text-decoration:none;box-shadow:0 4px 18px #f9c41f33;transition:transform .18s;">
+          <span style="font-size:1.25em;vertical-align:middle;">⬇️</span> Descargar PDF
+        </a>
+        <div style="font-size:.92rem;color:#888;margin-top:10px;">Archivo seguro y verificado &nbsp;|&nbsp; Última actualización: 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(sectionId, btn){
+      // Secciones
+      document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+
+      // Tabs
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      // Scroll al inicio para UX
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Pequeños efectos adicionales
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.users-table tr').forEach(row=>{
+        row.addEventListener('mouseenter', ()=>{ if(!row.querySelector('th')) row.style.transform='scale(1.01)';});
+        row.addEventListener('mouseleave', ()=>{ row.style.transform='scale(1)';});
+      });
+    });
+  </script>
+</body>
+</html>

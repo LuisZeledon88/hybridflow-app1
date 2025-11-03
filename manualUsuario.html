@@ -1,0 +1,419 @@
+<!--
+  manualUsuario.html
+  Manual de usuario y administración del sistema VIP CRM Bastos.
+  Incluye guía de uso, requisitos, instalación, solución de problemas y soporte.
+  Estructura profesional y comentarios para facilitar el mantenimiento.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manual VIP CRM Bastos</title>
+
+  <!-- Fuente igual que la app -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --primary-dark:#f9c41f;
+      --primary-light:#fdd147;
+      --secondary:#5C6BC0;
+      --light:#FAFAFA;
+      --dark:#333333;
+      --gray:#e0e0e0;
+      --success:#66BB6A;
+      --danger:#EF5350;
+      --radius:16px;
+      --shadow:0 10px 30px rgba(0,0,0,0.10);
+      --shadow-soft:0 6px 20px rgba(0,0,0,0.08);
+      --transition:all .25s ease;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Poppins',Arial,sans-serif;
+      background:
+        linear-gradient(rgba(255,255,255,.96),rgba(255,255,255,.96)),
+        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat fixed;
+      color:var(--dark);
+      min-height:100vh;
+      line-height:1.6;
+    }
+
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+
+    /* Topbar */
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+    .back-btn{
+      background:#fff;border:1px solid var(--gray);color:var(--dark);
+      padding:10px 14px;border-radius:12px;font-weight:600;text-decoration:none;
+      box-shadow:var(--shadow-soft);transition:var(--transition)
+    }
+    .back-btn:hover{transform:translateY(-1px);border-color:var(--primary-dark)}
+    .brand-spacer{width:48px}
+
+    /* Header hero */
+    .header{
+      background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));
+      color:#333;
+      padding:34px 26px;
+      border-radius:24px;
+      margin-bottom:26px;
+      box-shadow:var(--shadow);
+      position:relative;overflow:hidden;isolation:isolate;
+    }
+    .header::after{
+      content:"";position:absolute;inset:-20% -10% auto auto;
+      width:340px;height:340px;border-radius:50%;
+      background:radial-gradient(circle at center, rgba(255,255,255,.35), transparent 60%);
+      filter:blur(8px);z-index:-1;transform:translate(10%,-20%);
+    }
+    .header h1{font-weight:700;font-size:2.2rem;color:#333;letter-spacing:.3px}
+    .header p{margin-top:8px;font-weight:500;color:#4a4a4a;opacity:.9}
+
+    /* Tabs */
+    .nav-tabs{
+      position:sticky;top:10px;z-index:5;
+      display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+      margin:22px 0 26px 0;
+    }
+    .nav-tab{
+      border:1px solid #f2f2f2;background:#fff;color:#333;
+      cursor:pointer;font-weight:600;padding:12px 18px;border-radius:999px;
+      box-shadow:var(--shadow-soft);transition:var(--transition)
+    }
+    .nav-tab:hover{transform:translateY(-2px);border-color:var(--primary-dark)}
+    .nav-tab.active{
+      background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));
+      color:#333;border-color:transparent;transform:translateY(-2px)
+    }
+
+    /* Secciones / tarjetas */
+    .content-section{
+      display:none;background:#fff;border-radius:20px;padding:28px;
+      margin-bottom:20px;box-shadow:var(--shadow-soft);
+      animation:fadeIn .35s ease;
+    }
+    .content-section.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+    h2{
+      color:#333;font-size:1.7rem;margin-bottom:18px;font-weight:700;
+      display:flex;align-items:center;gap:10px;
+    }
+    h2::before{
+      content:"";width:6px;height:24px;border-radius:6px;
+      background:linear-gradient(180deg,var(--primary-dark),var(--primary-light));
+      display:inline-block;
+    }
+    h3{color:#222;margin:18px 0 12px;font-size:1.15rem;font-weight:700}
+
+    /* Cards y grids */
+    .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:16px 0}
+    .info-card{
+      background:#fff;padding:20px;border-radius:16px;border:1px solid #f3f3f3;
+      box-shadow:var(--shadow-soft);transition:var(--transition)
+    }
+    .info-card:hover{transform:translateY(-5px);box-shadow:0 12px 28px rgba(0,0,0,.12)}
+    .info-card h4{margin-bottom:8px;font-size:1.02rem;font-weight:700;color:#111}
+
+    .credentials-box{
+      background:#fff;border:1px dashed var(--primary-dark);color:#333;
+      padding:18px;border-radius:14px;margin:14px 0;font-family:'Courier New',monospace;
+      box-shadow:var(--shadow-soft)
+    }
+    .highlight{
+      background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));
+      color:#333;padding:18px;border-radius:14px;margin:14px 0;text-align:center;font-weight:700;
+      box-shadow:var(--shadow-soft)
+    }
+    .code-block{
+      background:#111;color:#ffe58a;padding:16px;border-radius:10px;
+      font-family:'Courier New',monospace;border:1px solid #2b2b2b;overflow-x:auto
+    }
+
+    /* Listas de pasos */
+    .steps-list{counter-reset:step;list-style:none;padding:0;margin:8px 0}
+    .steps-list li{
+      counter-increment:step;margin:12px 0;padding:14px 16px 14px 56px;
+      background:#fff;border-radius:14px;position:relative;transition:var(--transition);
+      border:1px solid #f0f0f0;box-shadow:var(--shadow-soft)
+    }
+    .steps-list li:hover{background:#fffdf1;transform:translateX(5px)}
+    .steps-list li::before{
+      content:counter(step);position:absolute;left:16px;top:50%;transform:translateY(-50%);
+      background:var(--primary-dark);color:#333;width:28px;height:28px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;
+      box-shadow:0 6px 16px rgba(249,196,31,.35)
+    }
+
+    /* Tabla */
+    .troubleshooting-table{
+      width:100%;border-collapse:separate;border-spacing:0;margin:14px 0;
+      border-radius:12px;overflow:hidden;box-shadow:var(--shadow-soft);border:1px solid #f1f1f1
+    }
+    .troubleshooting-table th{
+      background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));
+      color:#333;padding:14px;text-align:left;font-weight:700
+    }
+    .troubleshooting-table td{padding:12px 14px;border-top:1px solid #f4f4f4}
+    .troubleshooting-table tr:nth-child(even){background:#fcfcfc}
+    .troubleshooting-table tr:hover{background:#fff6d4}
+
+    /* Videos */
+    .video-section{
+      background:#fff;border:1px solid #f3f3f3;border-radius:20px;padding:24px;
+      box-shadow:var(--shadow-soft)
+    }
+    .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px}
+    .video-card{
+      background:#fff;border:1px solid #f3f3f3;border-radius:16px;padding:18px;text-align:center;
+      transition:var(--transition);box-shadow:var(--shadow-soft)
+    }
+    .video-card:hover{transform:translateY(-6px);background:#fffef5}
+    .video-btn{
+      display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));
+      color:#333;text-decoration:none;padding:10px 18px;border-radius:999px;font-weight:700;
+      transition:var(--transition);margin-top:12px;border:0
+    }
+    .video-btn::before{content:"▶";font-size:1.1rem}
+    .video-btn:hover{transform:scale(1.04)}
+
+    /* Contacto */
+    .contact-card{
+      background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));
+      color:#333;padding:24px;border-radius:18px;text-align:center;margin:18px 0;box-shadow:var(--shadow-soft)
+    }
+    .contact-info{font-size:1.05rem;font-weight:600}
+
+    /* Responsive */
+    @media (max-width:768px){
+      .container{padding:14px}
+      .header{padding:26px 18px}
+      .header h1{font-size:1.8rem}
+      .nav-tab{padding:10px 14px}
+      .content-section{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Topbar -->
+  <!--
+    Barra superior con botón para volver al dashboard principal.
+  -->
+    <div class="topbar">
+      <a class="back-btn" href="MenuPrincipal.html" title="Volver al Dashboard">← Volver al Dashboard</a>
+      <div class="brand-spacer"></div>
+    </div>
+
+    <!-- Hero -->
+  <!--
+    Sección principal con título y subtítulo del manual.
+  -->
+    <div class="header">
+      <h1>VIP CRM Bastos</h1>
+      <p>Manual de Usuario y Administración</p>
+    </div>
+
+    <!-- Tabs -->
+  <!--
+    Navegación por pestañas para acceder a las diferentes secciones del manual.
+  -->
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showSection('intro', this)">Introducción</button>
+      <button class="nav-tab" onclick="showSection('requirements', this)">Requisitos</button>
+      <button class="nav-tab" onclick="showSection('installation', this)">Instalación</button>
+      <button class="nav-tab" onclick="showSection('usage', this)">Uso del Sistema</button>
+      <button class="nav-tab" onclick="showSection('maintenance', this)">Mantenimiento</button>
+      <button class="nav-tab" onclick="showSection('troubleshooting', this)">Solución de Problemas</button>
+      <button class="nav-tab" onclick="showSection('videos', this)">Videos Tutoriales</button>
+      <button class="nav-tab" onclick="showSection('support', this)">Soporte</button>
+    </div>
+
+    <!-- Secciones -->
+  <!--
+    Secciones principales del manual: introducción, requisitos, instalación, uso, mantenimiento, solución de problemas, videos y soporte.
+  -->
+    <div id="intro" class="content-section active">
+      <h2>Introducción</h2>
+      <p>Este manual explica cómo instalar, configurar y utilizar el sistema VIP CRM Bastos, una herramienta completa para la gestión de clientes VIP.</p>
+      <div class="info-grid">
+        <div class="info-card"><h4>👤 Usuario Final</h4><p>Personas que usan el sistema para registrar y consultar información de clientes.</p></div>
+        <div class="info-card"><h4>🔧 Propietario/Administrador</h4><p>Persona encargada de la instalación, configuración y mantenimiento del sistema.</p></div>
+      </div>
+    </div>
+
+    <div id="requirements" class="content-section">
+      <h2>Requisitos del Sistema</h2>
+      <div class="info-grid">
+        <div class="info-card"><h4>💻 Hardware</h4><p>• Servidor físico<br>• Conexión a red estable<br>• Memoria RAM mínima recomendada</p></div>
+        <div class="info-card"><h4>🖥️ Software</h4><p>• Sistema operativo: Windows (en VM)<br>• Servidor web: Apache (XAMPP)<br>• Base de datos: MySQL<br>• Gestor BD: SQLYog o phpMyAdmin<br>• Navegador: Google Chrome (recomendado)</p></div>
+      </div>
+    </div>
+
+    <div id="installation" class="content-section">
+      <h2>Instalación del Sistema</h2>
+
+      <h3>⚙️ Configuración del Servidor</h3>
+      <ol class="steps-list">
+        <li>Encender el servidor xenservergrupo3</li>
+        <li>Acceder a la máquina virtual Windows mediante XenCenter o Escritorio remoto (RDP)</li>
+        <li>Verificar que Apache y MySQL estén activos en XAMPP</li>
+      </ol>
+
+      <h3>🗄️ Base de Datos</h3>
+      <ol class="steps-list">
+        <li>Abrir SQLYog</li>
+        <li>Conectarse con las credenciales proporcionadas</li>
+        <li>Importar el archivo crm_bastos.sql</li>
+      </ol>
+
+      <div class="credentials-box">
+        <h4>Credenciales de Base de Datos:</h4>
+        <p>Usuario: Grupo3<br>Contraseña: admin1234*<br>Puerto: 3306</p>
+      </div>
+
+      <h3>📁 Archivos del Sistema</h3>
+      <ol class="steps-list">
+        <li>Copiar la carpeta SistemaWeb a: C:\xampp\htdocs\</li>
+        <li>Verificar que la ruta final sea: C:\xampp\htdocs\ProyectoSistemaWeb</li>
+      </ol>
+
+      <div class="highlight">
+        <strong>URLs de Acceso</strong><br>
+        Login: http://10.50.80.215/proyectosistemaweb/autenticacion.html<br>
+        Registro Cliente Externo: http://10.50.80.215/proyectosistemaweb/registroclienteexterno.html
+      </div>
+    </div>
+
+    <div id="usage" class="content-section">
+      <h2>Uso del Sistema</h2>
+
+      <h3>🔐 Inicio de Sesión</h3>
+      <p>Ingresar usuario y contraseña según el rol asignado.</p>
+
+      <div class="credentials-box">
+        <h4>Usuario Administrador:</h4>
+        <p>Usuario: admin<br>Contraseña: 123456<br><em>→ Acceso completo a todas las funciones</em></p>
+      </div>
+
+      <h3>👤 Funciones de Usuario Final</h3>
+      <div class="info-grid">
+        <div class="info-card"><h4>Registrar Clientes VIP</h4><p>Captura completa de información de nuevos clientes VIP</p></div>
+        <div class="info-card"><h4>Editar Información</h4><p>Modificación de datos existentes de clientes</p></div>
+        <div class="info-card"><h4>Buscar Clientes</h4><p>Sistema de búsqueda avanzada por múltiples criterios</p></div>
+      </div>
+
+      <h3>🔧 Funciones de Propietario</h3>
+      <div class="info-card">
+        <h4>Administración Avanzada</h4>
+        <p>• Crear y asignar usuarios<br>• Gestión de permisos<br>• Configuración del sistema<br>• Respaldos y mantenimiento</p>
+      </div>
+    </div>
+
+    <div id="maintenance" class="content-section">
+      <h2>Mantenimiento y Seguridad</h2>
+      <div class="info-grid">
+        <div class="info-card"><h4>🔒 Seguridad</h4><p>• Contraseñas seguras<br>• Cambio cada 90 días<br>• Firewall configurado</p></div>
+        <div class="info-card"><h4>💾 Respaldos</h4><p>• Respaldos automáticos diarios<br>• Horario: 23:00 hrs<br>• Verificación de integridad</p></div>
+        <div class="info-card"><h4>🌐 Puertos Habilitados</h4><p>• 3306 (MySQL)<br>• 80 (HTTP)<br>• 443 (HTTPS)</p></div>
+      </div>
+    </div>
+
+    <div id="troubleshooting" class="content-section">
+      <h2>Resolución de Problemas Comunes</h2>
+      <table class="troubleshooting-table">
+        <thead>
+          <tr><th>Problema</th><th>Posible Causa</th><th>Solución</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>No carga el sistema</td><td>Apache/MySQL apagados</td><td>Activar servicios en XAMPP</td></tr>
+          <tr><td>Error de conexión a BD</td><td>Datos incorrectos en Conexion.php</td><td>Verificar credenciales de conexión</td></tr>
+          <tr><td>Página no encontrada</td><td>Ruta incorrecta</td><td>Revisar URL o carpeta en htdocs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="videos" class="content-section">
+      <div class="video-section">
+        <h2>📹 Videos Tutoriales</h2>
+        <p>Aprende a usar el sistema con estos videos demostrativos:</p>
+
+        <div class="video-grid">
+          <div class="video-card">
+            <h3>Dashboard</h3>
+            <p>Funcionamiento completo del panel principal de control</p>
+            <a href="https://youtu.be/fZJ6Z1_ctmQ" target="_blank" class="video-btn">Ver Video</a>
+          </div>
+
+          <div class="video-card">
+            <h3>Gestión Clientes VIP</h3>
+            <p>Como registrar, editar y gestionar clientes VIP</p>
+            <a href="https://youtu.be/IuTrLDMcp2c" target="_blank" class="video-btn">Ver Video</a>
+          </div>
+
+          <div class="video-card">
+            <h3>Acciones de Gestión</h3>
+            <p>Operaciones avanzadas y funciones especiales</p>
+            <a href="https://youtu.be/54PauX4vpKA" target="_blank" class="video-btn">Ver Video</a>
+          </div>
+
+          <div class="video-card">
+            <h3>Gestión Clientes Externo</h3>
+            <p>Registro y gestión de clientes externos</p>
+            <a href="https://youtu.be/3lsCujKulYA" target="_blank" class="video-btn">Ver Video</a>
+          </div>
+
+          <div class="video-card">
+            <h3>Editar mi Perfil</h3>
+            <p>Cómo editar tu perfil de usuario en el sistema</p>
+            <a href="https://youtu.be/yBTBVu4UOfY" target="_blank" class="video-btn">Ver Video</a>
+          </div>
+
+          <div class="video-card">
+            <h3>Sistema Tarjetas</h3>
+            <p>Gestión y administración de tarjetas VIP</p>
+            <a href="https://youtu.be/3lsCujKulYA" target="_blank" class="video-btn">Ver Video</a>
+          </div>
+
+          <div class="video-card">
+            <h3>Administrar Perfil (Propietario)</h3>
+            <p>Gestión avanzada del perfil de propietario</p>
+            <a href="https://youtu.be/0xC68Qfj5PQ" target="_blank" class="video-btn">Ver Video</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="support" class="content-section">
+      <h2>Soporte Técnico</h2>
+      <div class="contact-card">
+        <h3>📞 Contacto</h3>
+        <div class="contact-info">
+          <p><strong>Desarrollador:</strong> Grupo 3</p>
+          <p><strong>Teléfono:</strong> +506 8519 8095</p>
+          <p><strong>Cargo:</strong> Project Manager</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <h4>Horarios de Atención</h4>
+        <p>Para soporte técnico y consultas, contáctanos durante el horario laboral. Respuesta garantizada en menos de 24 horas.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(sectionId, btn){
+      document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+
+      document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+      if(btn) btn.classList.add('active');
+
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  </script>
+</body>
+</html>

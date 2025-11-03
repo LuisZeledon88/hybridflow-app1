@@ -1,0 +1,196 @@
+<!--
+    CrearUsuarios.html
+    Página para el registro y gestión de usuarios del sistema CRM Bastos Restaurante.
+    Incluye formulario de registro, validación y ayuda para roles y contraseñas.
+    Estructura profesional y comentarios para facilitar el mantenimiento.
+-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Usuarios - Bastos Restaurante CRM</title>
+    <link rel="stylesheet" href="css/CrearUsuarios.css">
+    <link rel="stylesheet" href="css/BotonesCrearUsuarios.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="fullscreen-container">
+        <div class="bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+        
+        <header class="system-header">
+            <!--
+                Header principal con navegación, logo y usuario activo.
+            -->
+            <div class="header-left">
+                <a href="MenuPrincipal.html" class="btn btn-back">
+                    <i class="fas fa-arrow-left"></i> Menú Principal
+                </a>
+            </div>
+            
+            <div class="logo">
+                <img src="img/LogoBastos-2025.png" width="150px" alt="Logo Bastos" />
+                <span class="system-name">CRM Bastos Restaurante</span>
+            </div>
+            
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">Cargando...</span>
+                    <span class="user-role" id="userRole">Cargando...</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!--
+                Contenido principal: formulario de registro de usuarios y sección de ayuda.
+            -->
+            <div class="form-container">
+                <!--
+                    Formulario para registrar nuevos usuarios en el sistema.
+                -->
+                <div class="form-header">
+                    <h1 class="section-title">
+                        <i class="fas fa-user-plus"></i> Crear Nuevo Usuario
+                    </h1>
+                    <p class="section-subtitle">Complete el formulario para registrar un nuevo usuario en el sistema</p>
+                </div>
+                
+                <form id="createUserForm" class="register-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="userUsername" class="form-label">
+                                <i class="fas fa-user"></i>
+                                Nombre de Usuario
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="text" id="userUsername" name="userUsername" class="form-input"
+                                    placeholder="Ej: JuanPerez" required>
+                                <i class="fas fa-user input-icon"></i>
+                            </div>
+                            <span class="error-message" id="userUsernameError"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="userEmail" class="form-label">
+                                <i class="fas fa-envelope"></i>
+                                Correo Electrónico
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="email" id="userEmail" name="userEmail" class="form-input"
+                                    placeholder="Ej: usuario@bastos.com" required>
+                                <i class="fas fa-envelope input-icon"></i>
+                            </div>
+                            <span class="error-message" id="userEmailError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userPassword" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Contraseña
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="password" id="userPassword" name="userPassword" class="form-input"
+                                    placeholder="Mínimo 8 caracteres" required>
+                                <i class="fas fa-lock input-icon"></i>
+                                <button type="button" class="toggle-password" data-target="userPassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <span class="error-message" id="userPasswordError"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="userRoleSelect" class="form-label">
+                                <i class="fas fa-user-tag"></i>
+                                Rol del Usuario
+                            </label>
+                            <div class="input-wrapper">
+                                <select id="userRoleSelect" name="userRole" class="form-input" required>
+                                    <option value="">Seleccione un rol</option>
+                                    <option value="Salonero">Salonero</option>
+                                    <option value="Propietario">Propietario</option>
+                                    <option value="Desarrollador">Desarrollador</option>
+                                </select>
+                                <i class="fas fa-user-tag input-icon"></i>
+                            </div>
+                            <span class="error-message" id="userRoleError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-premium silver" id="clearUserBtn">
+                            <i class="fas fa-eraser"></i> Limpiar Formulario
+                        </button>
+                        <button type="submit" class="btn-premium gold" id="createUserBtn">
+                            <i class="fas fa-save"></i> Registrar Usuario
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="help-section">
+                <!--
+                    Sección de ayuda rápida para la creación de usuarios.
+                -->
+                <div class="help-card">
+                    <h3><i class="fas fa-question-circle"></i> ¿Necesitas ayuda?</h3>
+                    <p>Consulta nuestra guía rápida para crear usuarios:</p>
+                    <ul class="help-tips">
+                        <li><i class="fas fa-check-circle"></i> Usa nombres de usuario únicos</li>
+                        <li><i class="fas fa-check-circle"></i> Asigna roles según responsabilidades</li>
+                        <li><i class="fas fa-check-circle"></i> Utiliza Contraseñas complicadas</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <footer class="system-footer">
+            <!--
+                Pie de página con información de derechos, versión y estado del sistema.
+            -->
+            <div class="footer-content">
+                <p>© 2025 Bastos Restaurante - Todos los derechos reservados</p>
+                <div class="system-info">
+                    <span class="version">v2.1.0</span>
+                    <span class="status-indicator active">
+                        <i class="fas fa-circle"></i> Sistema Activo
+                    </span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal de éxito -->
+    <!--
+        Modal para mostrar confirmación tras un registro exitoso.
+    -->
+    <div class="modal" id="successModal" style="display: none;">
+        <div class="modal-content success-modal">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <h3 id="successTitle">¡Usuario Registrado!</h3>
+            <p id="successMessage">El usuario ha sido creado correctamente en el sistema.</p>
+            <div class="modal-actions">
+                <button class="btn-primary" id="continueBtn">
+                    <i class="fas fa-arrow-right"></i> Continuar
+                </button>
+                <button class="btn-primary outline" id="newUserBtn">
+                    <i class="fas fa-user-plus"></i> Crear Otro
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/CrearUsuarios.js"></script>
+</body>
+</html>

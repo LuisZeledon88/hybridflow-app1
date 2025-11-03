@@ -1,0 +1,167 @@
+<!--
+    EditarPerfil.html
+    Página para la edición y gestión del perfil de usuario en el CRM Bastos Restaurante.
+    Incluye formulario de edición, cambio de contraseña y eliminación de cuenta.
+    Estructura profesional y comentarios para facilitar el mantenimiento.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - Bastos Restaurante CRM</title>
+    <link rel="stylesheet" href="./css/EditarPerfil.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="edit-profile-container">
+        <div class="edit-profile-card">
+            <div class="edit-profile-header">
+                <!--
+                    Header principal con navegación, logo y usuario activo.
+                -->
+                <div class="header-left">
+                    <a href="MenuPrincipal.html" class="btn btn-back">
+                        <i class="fas fa-arrow-left"></i> Menú Principal
+                    </a>
+                </div>
+                
+                <div class="logo">
+                    <img src="img/LogoBastos-2025.png" width="150px" alt="Logo Bastos" />
+                </div>
+                
+                <div class="current-user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="currentUserName">Cargando...</span>
+                        <span class="user-role" id="currentUserRole">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edit-profile-content">
+                <!--
+                    Contenido principal: formulario de edición de perfil y acciones de cuenta.
+                -->
+                <div class="form-container">
+                    <h2 class="section-title">Editar Perfil</h2>
+                    <p class="section-subtitle">Actualiza tu información personal de forma sencilla</p>
+
+                    <!-- FORMULARIO -->
+                    <!--
+                        Formulario para editar los datos personales y credenciales del usuario.
+                    -->
+                    <form id="editProfileForm" class="profile-form">
+                        <div class="form-group">
+                            <label for="profileName" class="form-label">
+                                <i class="fas fa-user"></i> Nombre Completo
+                            </label>
+                            <input type="text" id="profileName" class="form-input" placeholder="Ingresa tu nombre completo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profileEmail" class="form-label">
+                                <i class="fas fa-envelope"></i> Correo Electrónico
+                            </label>
+                            <input type="email" id="profileEmail" class="form-input" placeholder="Ingresa tu correo electrónico" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profilePassword" class="form-label">
+                                <i class="fas fa-lock"></i> Nueva Contraseña
+                            </label>
+                            <div class="password-input-container">
+                                <input type="password" id="profilePassword" class="form-input" placeholder="Dejar vacío para mantener actual">
+                                <button type="button" class="toggle-password" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small class="form-help">Déjalo vacío si no deseas cambiar tu contraseña</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profileRole" class="form-label">
+                                <i class="fas fa-user-tag"></i> Rol del Usuario
+                            </label>
+                            <select id="profileRole" class="form-input" required>
+                                <option value="">Selecciona un rol</option>
+                                <option value="Desarrollador">Desarrollador</option>
+                                <option value="Propietario">Propietario</option>
+                                <option value="Salonero">Salonero</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <!-- BOTONES CENTRADOS -->
+                    <!--
+                        Botones para cancelar, guardar cambios o eliminar la cuenta.
+                    -->
+                    <div class="form-actions">
+                        <button type="button" class="form-btn secondary" id="cancelBtn">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" form="editProfileForm" class="form-btn primary">
+                            <i class="fas fa-save"></i> Guardar Cambios
+                        </button>
+                        <button type="button" class="form-btn danger" id="deleteAccountBtn">
+                            <i class="fas fa-user-slash"></i> Eliminar Cuenta
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <footer class="edit-profile-footer">
+    <!--
+        Pie de página con información de derechos, versión y estado del sistema.
+    -->
+  <div class="footer-content">
+    <p>© 2025 Bastos Restaurante - Todos los derechos reservados</p>
+    <div class="system-info">
+      <span class="version">v2.1.0</span>
+      <span class="status-indicator active">
+        <i class="fas fa-circle"></i> Sistema Activo
+      </span>
+    </div>
+  </div>
+</footer>
+
+
+
+        <!-- MODALES -->
+        <!--
+            Modales para mostrar mensajes de éxito o error tras acciones en el perfil.
+        -->
+        <div class="modal" id="successModal" style="display: none;">
+            <div class="modal-content success-modal">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 id="successTitle">¡Perfil Actualizado!</h3>
+                <p id="successMessage">Tus cambios han sido guardados correctamente.</p>
+                <button class="btn-primary" id="continueBtn">
+                    <i class="fas fa-arrow-right"></i> Continuar
+                </button>
+            </div>
+        </div>
+
+        <div class="modal" id="errorModal" style="display: none;">
+            <div class="modal-content error-modal">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3 id="errorTitle">Error</h3>
+                <p id="errorMessage">Ha ocurrido un error al actualizar el perfil.</p>
+                <button class="btn-error" id="errorContinueBtn">
+                    <i class="fas fa-times"></i> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/EditarPerfil.js"></script>
+</body>
+</html>

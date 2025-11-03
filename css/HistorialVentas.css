@@ -1,0 +1,160 @@
+/* =======================
+   HistorialVentas.css — FINAL
+   ======================= */
+
+/* Tokens de marca */
+:root{
+  --brand:#f3c22f;
+  --brand-600:#e3b319;
+  --ink:#1f2937;
+  --muted:#6b7280;
+  --bg:#f6f7fb;
+  --card:#ffffff;
+  --line:#e9e9ee;
+  --ring:0 0 0 3px rgba(243,194,47,.25);
+  --r-lg:18px;
+  --r-md:14px;
+  --shadow-1:0 6px 22px rgba(0,0,0,.08);
+  --shadow-2:0 10px 26px rgba(0,0,0,.10);
+}
+
+*{ box-sizing:border-box }
+body{
+  margin:0;
+  font-family:'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--ink);
+}
+
+/* Fondo y barra superior */
+.historial-ventas-vip-bg{ position:fixed; inset:0; z-index:-1; background:var(--bg); }
+.historial-ventas-vip-bar{
+  background:linear-gradient(90deg,var(--brand) 78%, #fff6cc 100%);
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  padding:.9rem 0;
+}
+.bar-content{
+  max-width:1200px; margin:0 auto; padding:0 1rem;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+}
+.bar-title{
+  color:#fff; font-weight:800; font-size:1.18rem; letter-spacing:.3px;
+  display:flex; align-items:center; gap:.55rem;
+}
+.bar-title i{ color:#fff; font-size:1.1rem; }
+.btn-regresar{
+  display:flex; align-items:center; gap:.55rem;
+  background:#fff; color:var(--brand); border:0; cursor:pointer;
+  padding:.6rem 1.1rem; font-weight:700; border-radius:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  transition:.18s transform,.18s background,.18s color;
+}
+.btn-regresar:hover{ background:var(--brand); color:#fff; transform:translateY(-1px); }
+.btn-regresar:focus{ box-shadow:var(--ring); }
+
+/* Panel principal en grilla */
+.historial-ventas-vip-panel{
+  max-width:1200px; margin:2.2rem auto; padding:2rem;
+  background:var(--card); border-radius:var(--r-lg); box-shadow:var(--shadow-1);
+
+  display:grid;
+  grid-template-columns: 1.45fr 1fr;
+  grid-template-areas:
+    "header header"
+    "kpis   resumen"
+    "historial resumen";
+  gap:1.8rem;
+  align-items:start;
+}
+
+/* Hacemos que los hijos de .analisis-ventas cuenten como items del grid del panel */
+.analisis-ventas{ display:contents; }
+
+/* Header */
+.historial-ventas-vip-header{ grid-area:header; text-align:center; }
+.historial-ventas-vip-header h1{
+  margin:.2rem 0 .35rem; font-size:2.05rem; font-weight:900; color:var(--brand);
+}
+.historial-ventas-vip-header p{
+  margin:0; color:#444a5a; font-weight:500;
+}
+
+/* KPIs (Hoy/Mes/Año) */
+#analisisVentas{ grid-area:kpis; }
+.analisis-cards-flex{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(210px,1fr));
+  gap:1.1rem;
+  align-items:stretch;
+}
+@media (max-width:980px){ .analisis-cards-flex{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width:680px){ .analisis-cards-flex{ grid-template-columns: 1fr; } }
+
+.analisis-card{
+  background:linear-gradient(180deg,#fff,#fffdf2);
+  border:1px solid var(--line); border-radius:var(--r-md);
+  padding:1rem 1.15rem; min-height:120px;
+  display:grid; grid-template-rows:auto auto auto; justify-items:center; gap:.25rem;
+  box-shadow:0 4px 14px rgba(0,0,0,.06);
+  transition:.18s transform,.18s box-shadow,.18s border-color;
+}
+.analisis-card:hover{ transform:translateY(-2px); box-shadow:var(--shadow-2); border-color:#f1e6b6; }
+.analisis-card i{
+  font-size:1.85rem; color:var(--brand);
+  background:#fff; border-radius:50%; padding:.45rem;
+  border:1px solid var(--line); box-shadow:0 1px 4px rgba(0,0,0,.06);
+}
+.analisis-card span{ color:#444a5a; font-weight:700; letter-spacing:.3px; }
+.analisis-monto{ font-size:1.18rem; font-weight:800; letter-spacing:.3px; font-variant-numeric:tabular-nums }
+
+/* Resúmenes (derecha) */
+#resumenVentasContainer{
+  grid-area:resumen;
+  display:flex; flex-direction:column; gap:1rem;
+  position:sticky; top:1rem;
+}
+.resumen-ventas{
+  background:#fff; border:1px solid var(--line); border-radius:var(--r-md);
+  overflow:hidden; box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+.resumen-ventas h3{
+  margin:1rem 1rem .6rem; color:#2b2b2b; font-size:1.02rem; font-weight:800; letter-spacing:.25px;
+}
+
+/* Tablas reutilizables */
+.ventas-table{ width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums }
+.ventas-table thead th{
+  background:var(--brand); color:#fff; font-weight:800; letter-spacing:.3px;
+  text-align:left; padding:.6rem .9rem; border-bottom:1px solid #e6b800;
+}
+.ventas-table tbody td{
+  padding:.65rem .95rem; border-bottom:1px solid var(--line); color:var(--ink);
+}
+.ventas-table tbody tr:nth-child(even) td{ background:#fafafa; }
+.ventas-table tbody tr:hover td{ background:#fff9db; }
+
+/* Historial (abajo izquierda) */
+#ventasEstadisticas{
+  grid-area:historial;
+  padding:1.4rem 1.6rem;
+  background:#fff; border:1px solid var(--line); border-radius:var(--r-md);
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+#ventasEstadisticas h2{ margin:0 0 .9rem; font-size:1.22rem; font-weight:900; color:#2b2b2b; }
+#ventasEstadisticas p{ margin:0; color:var(--muted); }
+
+/* Focus accesible */
+button:focus, .btn-regresar:focus, a:focus{ box-shadow:var(--ring); outline:none }
+
+/* Responsive: apilar en una columna */
+@media (max-width:980px){
+  .historial-ventas-vip-panel{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "header"
+      "kpis"
+      "resumen"
+      "historial";
+  }
+  #resumenVentasContainer{ position:static; }
+}

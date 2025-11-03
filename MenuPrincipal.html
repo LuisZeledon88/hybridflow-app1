@@ -1,0 +1,230 @@
+<!--
+    MenuPrincipal.html
+    Página principal del sistema con dashboard, estadísticas y navegación.
+    Incluye panel de usuario, gráficos y acceso a módulos clave.
+    Estructura profesional y comentarios para facilitar el mantenimiento.
+-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Control - Bastos Restaurante</title>
+
+    <link rel="stylesheet" href="css/MenuPrincipal.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Cargar Chart.js con defer para evitar bloqueos de parseo -->
+    <!--
+        Librería Chart.js para gráficos estadísticos.
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <!--
+            Barra lateral de navegación con accesos rápidos a módulos.
+        -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <img src="img/LogoBastos-2025.png" alt="Logo Bastos" class="logo" />
+                <div class="user-profile">
+                    <div class="user-info">
+                        <span class="user-name" id="sidebarUserName">Usuario</span>
+                    </div>
+
+                    <!-- Arreglo accesibilidad -->
+                    <!--
+                        Sección para mejorar la accesibilidad del sistema.
+                    -->
+                    <button class="logout-btn-header" id="logoutBtn" aria-label="Cerrar sesión" title="Cerrar sesión">
+                        <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active" id="btnDashboard">
+                    <i class="fas fa-home"></i><span>Inicio</span>
+                </a>
+                <a href="#" class="menu-item" id="btnRegistrarClientes">
+                    <i class="fas fa-user-plus"></i><span>Gestión Clientes VIP</span>
+                </a>
+                <a href="#" class="menu-item" id="btnTarjetasVIP" style="display: none;">
+                    <i class="fas fa-crown"></i><span>Sistema Tarjetas VIP</span>
+                </a>
+                <a href="#" class="menu-item" id="btnEditarPerfil">
+                    <i class="fas fa-user-edit"></i><span>Mi Perfil</span>
+                </a>
+                <a href="#" class="menu-item" id="btnCrearUsuario" style="display: none;">
+                    <i class="fas fa-users-cog"></i><span>Administrar Usuarios</span>
+                </a>
+                <a href="#" class="menu-item" id="btnManualTecnico" title="Manual Técnico">
+                    <i class="fas fa-book"></i><span>Manual Técnico</span>
+                </a>
+
+                <a href="#" class="menu-item" id="btnManualUsuario" title="Manual de Usuario">
+                    <i class="fas fa-book-open"></i><span>Manual de Usuario</span>
+                </a>
+
+                    <a href="HistorialVentas.html" class="menu-item" id="btnHistorialVentas" title="Historial de Ventas">
+                        <i class="fas fa-history"></i><span>Historial de Ventas</span>
+                    </a>
+
+            </nav>
+        </div>
+
+        <!-- Dashboard Principal -->
+        <!--
+            Panel principal con estadísticas y gráficos de clientes y ventas.
+        -->
+        <div class="main-content">
+            <div class="welcome-panel-compact">
+                <h1>Bienvenido, <span id="welcomeUserName">Usuario</span></h1>
+                <p>CRM Bastos - <span id="currentDate">Cargando fecha...</span> | <span id="currentTime">Cargando
+                        hora...</span></p>
+            </div>
+
+            <div class="dashboard-container">
+                <!-- Grid de estadísticas -->
+                <!--
+                    Cuadros con estadísticas clave del sistema.
+                -->
+                <div class="stats-grid">
+                    <div class="stat-card new-clients clickable-card" data-modal="newClientsModal">
+                        <div class="stat-header">
+                            <span class="stat-title">Clientes Nuevos</span>
+                            <div class="stat-icon"><i class="fas fa-user-plus"></i></div>
+                        </div>
+                        <div class="stat-number" id="newClientsCount">0</div>
+                        <div class="stat-description">En los últimos 30 días</div>
+                    </div>
+
+                    <div class="stat-card birthdays clickable-card" data-modal="birthdaysModal">
+                        <div class="stat-header">
+                            <span class="stat-title">Cumpleaños Próximos</span>
+                            <div class="stat-icon"><i class="fas fa-birthday-cake"></i></div>
+                        </div>
+                        <div class="stat-number" id="birthdaysCount">0</div>
+                        <div class="stat-description">En los próximos 7 días</div>
+                    </div>
+
+                    <div class="stat-card frequent-clients clickable-card" data-modal="frequentClientsModal">
+                        <div class="stat-header">
+                            <span class="stat-title">Clientes Frecuentes</span>
+                            <div class="stat-icon"><i class="fas fa-crown"></i></div>
+                        </div>
+                        <div class="stat-number" id="frequentClientsCount">0</div>
+                        <div class="stat-description">Con más de 3 compras</div>
+                    </div>
+
+                    <div class="stat-card earnings">
+                        <div class="stat-header">
+                            <span class="stat-title">Ganancias de Hoy</span>
+                            <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                        </div>
+                        <div class="stat-number" id="dailyEarnings">₡0</div>
+                        <div class="stat-description">Último día con ventas</div>
+                    </div>
+
+                    <div class="stat-card earnings">
+                        <div class="stat-header">
+                            <span class="stat-title">Ganancias de la Semana</span>
+                            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                        </div>
+                        <div class="stat-number" id="weeklyEarnings">₡0</div>
+                        <div class="stat-description">Últimos 7 días</div>
+                    </div>
+
+                    <div class="stat-card earnings">
+                        <div class="stat-header">
+                            <span class="stat-title">Ganancias del Mes</span>
+                            <div class="stat-icon"><i class="fas fa-calendar-month"></i></div>
+                        </div>
+                        <div class="stat-number" id="monthlyEarnings">₡0</div>
+                        <div class="stat-description">Mes actual</div>
+                    </div>
+                </div>
+
+                <!-- Contenido -->
+                <!--
+                    Contenido principal del dashboard.
+                -->
+                <div class="dashboard-content">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Análisis de Ganancias</h3>
+                            <div class="chart-filters">
+                                <button class="filter-btn active" data-period="day">Día</button>
+                                <button class="filter-btn" data-period="week">Semana</button>
+                                <button class="filter-btn" data-period="month">Mes</button>
+                            </div>
+                        </div>
+                        <div class="chart-placeholder" id="earningsChart">
+                            <canvas id="earningsChartCanvas" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modales -->
+    <!--
+        Modales para mostrar detalles, cumpleaños y clientes frecuentes.
+    -->
+    <div id="newClientsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Clientes Nuevos</h3>
+                <span class="close" data-modal="newClientsModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="newClientsModalList">
+                    <p>Cargando clientes nuevos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="birthdaysModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-birthday-cake"></i> Cumpleaños Próximos</h3>
+                <span class="close" data-modal="birthdaysModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="birthdaysModalList">
+                    <p>Cargando cumpleaños próximos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="frequentClientsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-crown"></i> Clientes Frecuentes</h3>
+                <span class="close" data-modal="frequentClientsModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="frequentClientsModalList">
+                    <p>Cargando clientes frecuentes...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tu JS (con defer) -->
+    <!--
+        Script principal de la página para manejo de eventos y datos.
+    -->
+    <script src="js/MenuPrincipal.js" defer></script>
+</body>
+
+</html>
